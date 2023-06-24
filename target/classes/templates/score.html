@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/js/layui/css/layui.css">
+</head>
+<body>
+<script src="/js/layui/layui.js"></script>
+<script src="/js/teacher.js"></script>
+<!--<ul class="layui-nav layui-nav-tree" lay-filter="test">-->
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo layui-hide-xs layui-bg-black">layout demo</div>
+        <!-- 头部区域（可配合layui 已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <!-- 移动端显示 -->
+            <li class="layui-nav-item layui-show-xs-inline-block layui-hide-sm" lay-header-event="menuLeft">
+                <i class="layui-icon layui-icon-spread-left"></i>
+            </li>
+
+            <li class="layui-nav-item layui-hide-xs"><a href="">nav 1</a></li>
+            <li class="layui-nav-item layui-hide-xs"><a href="">nav 2</a></li>
+            <li class="layui-nav-item layui-hide-xs"><a href="">nav 3</a></li>
+            <li class="layui-nav-item">
+                <a href="javascript:;">nav groups</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">menu 11</a></dd>
+                    <dd><a href="">menu 22</a></dd>
+                    <dd><a href="">menu 33</a></dd>
+                </dl>
+            </li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item layui-hide layui-show-md-inline-block">
+                <a href="javascript:;">
+                    <img src="//tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg" class="layui-nav-img">
+                    <label th:text="${session.user.name}"></label>
+                </a>
+            </li>
+            <li class="layui-nav-item" lay-header-event="menuRight" lay-unselect>
+                <a href="javascript:;">
+                    <i class="layui-icon layui-icon-more-vertical"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="">我的课程</a>
+                    <dl class="layui-nav-child">
+                        <dd th:each="clazz:${session.clazzList}">
+                            <a th:href="@{|/teacher/score?id=${clazz.id}|}" th:text="${clazz.name}">list 1</a>
+                        </dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">学期选择</a>
+                    <dl class="layui-nav-child">
+                        <dd th:each="step:${session.steps}"><a th:href="@{|/teacher/index?stepId=${step.id}|}" th:text="${step.name}">list 1</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a href="javascript:;">click menu item</a></li>
+                <li class="layui-nav-item"><a href="">the links</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;">
+<!--            <button th:onclick="|addScore(${sub.id})|" class="layui-btn">添加成绩</button>-->
+            <table class="layui-table">
+                <colgroup>
+                    <col width="150">
+                    <col width="200">
+                    <col>
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>课程名称</th>
+                    <th>学生姓名</th>
+                    <th>学号</th>
+                    <th>班级</th>
+                    <th>成绩</th>
+                    <th>学分</th>
+                    <th>学时</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="not ${#lists.isEmpty(students.getRecords())}" th:each="stu:${students.getRecords()}">
+                    <td th:text="${sub.name}">java</td>
+                    <td th:text="${stu.name}">2.5</td>
+                    <td th:text="${stu.num}">20202</td>
+                    <td th:text="${stu.clazzName}">2班</td>
+                    <td th:if="${stu.score}"  th:text="${stu.score}" >16</td>
+                    <td th:if="not ${stu.score}" th:text="暂无成绩"></td>
+                    <td th:text="${sub.score}">10</td>
+                    <td th:text="${sub.time}">10</td>
+                    <td><button th:onclick="|showScore(${sub.id},${stu.id})|" class="layui-btn">修改成绩</button></td>
+<!--                    <td><button class="layui-btn" th:onclick="|selectScore(${clazz.id})|">查看课程成绩</button></td>-->
+                </tr>
+                </tbody>
+            </table>
+            <button th:onclick="|page(1,${sub.id})|" class="layui-btn" >首页</button>
+            <button th:onclick="|page(${students.current-1},${sub.id})|" class="layui-btn" th:disabled="${not students.hasPrevious()}">上一页</button>
+            <button th:onclick="|page(${students.current+1},${sub.id})|" class="layui-btn" th:disabled="${not students.hasNext()}">下一页</button>
+            <button th:onclick="|page(${students.pages},${sub.id})|" class="layui-btn">尾页</button>
+        </div>
+    </div>
+
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        底部固定区域
+    </div>
+</div>
+
+</body>
+</html>
