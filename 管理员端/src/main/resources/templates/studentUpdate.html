@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/backstage.css">
+    <title>update</title>
+</head>
+<body>
+    <div class="center">
+        <p style="font-size: 24px;margin-top: 20px;margin-left: 10px">修改管理员信息</p>
+        <form class="input_form" th:action="@{/student/updateStudent}" method="post" >
+            <input type="hidden" name="stu_id" th:value="${student.stu_id}">
+            <span>工号</span><input style="width: 250px;margin-left: 20px" type="text" name="stu_num" th:value="${student.stu_num}"><br>
+            <span>密码</span><input style="width: 250px;margin-left: 20px" type="text" name="stu_pwd" th:value="${student.stu_pwd}"><br>
+            <span>姓名</span><input style="width: 250px;margin-left: 20px" type="text" name="stu_name" th:value="${student.stu_name}"><br>
+            <span>班级</span>
+            <select name="class_id" style="width: 150px;height:30px;margin-top: 20px;margin-left: 15px">
+                <option th:each="clzz : ${Clazz}" th:value="${clzz.class_id}" th:text="${clzz.class_name}"></option>
+            </select><br>
+            <span>性别</span>
+            <select name="stu_gender" style="width: 50px;height:30px;margin-top: 10px;margin-left: 15px">
+                <option th:each="sex : ${SexList}" th:value="${sex.stu_gender}" th:text="${sex.stu_gender}"></option>
+            </select><br>
+            <span>年龄</span><input style="width: 250px;margin-left: 20px" type="text" name="stu_age" th:value="${student.stu_age}"><br>
+            <span>年级</span><input style="width: 250px;margin-left: 20px" type="text" name="stu_begin_year" th:value="${student.stu_begin_year}"><br>
+            <span>手机</span><input style="width: 250px;margin-left: 20px" type="text" name="stu_tel" th:value="${student.stu_tel}"><br>
+            <span>住址</span><input style="width: 250px;margin-left: 20px" type="text" name="stu_addr" th:value="${student.stu_addr}"><br>
+            <span>备注</span><textarea style="height:100px;width: 250px;margin-top:10px;margin-left: 20px"  name="stu_remark" th:value="${student.stu_remark}" th:text="${student.stu_remark}"></textarea><br>
+            <input style="width:150px;margin-left:240px;padding-right:20px;background-color: rgb(64, 158, 255);color: white" type="submit" value="修改">
+        </form>
+    </div>
+    <div class="back">
+        <img src="/img/background.png">
+    </div>
+</body>
+</html>

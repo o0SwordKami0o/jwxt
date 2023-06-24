@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/backstage.css">
+    <title>update</title>
+</head>
+<body>
+<div class="back">
+    <div class="center">
+        <p style="font-size: 24px;margin-top: 20px;margin-left: 10px">添加管理员信息</p>
+        <form class="input_form" th:action="@{/teacher/addTeacher}" method="post" >
+            <span>工号</span><input style="width: 250px;margin-left: 20px" type="text" name="teacher_num"><br>
+            <span>密码</span><input style="width: 250px;margin-left: 20px" type="text" name="teacher_pwd"><br>
+            <span>姓名</span><input style="width: 250px;margin-left: 20px" type="text" name="teacher_name"><br>
+            <span>专业</span>
+            <select name="pro_id" style="width: 150px;height:30px;margin-top: 10px;margin-left: 15px">
+                <option th:each="profession : ${Professions}" th:value="${profession.pro_id}" th:text="${profession.pro_name}"></option>
+            </select><br>
+            <span>性别</span><input style="width: 25px; margin-left:20px;height: 15px" type="radio" name="teacher_gender" value="男" checked>男<input style=" margin-left:10px;width: 25px;height: 15px" type="radio" name="teacher_gender" value="女">女<br>
+            <span>年龄</span><input style="width: 250px;margin-left: 20px" type="text" name="teacher_age"><br>
+            <span>手机</span><input style="width: 250px;margin-left: 20px" type="text" name="teacher_tel"><br>
+            <span>简历</span><textarea style="height:100px;width: 250px;margin-top:10px;margin-left: 20px" type="text" name="teacher_resume"></textarea><br>
+            <input style="width:150px;margin-left:240px;padding-right:20px;background-color: rgb(64, 158, 255);color: white" type="submit" value="添加">
+        </form>
+    </div>
+    <img src="/img/background.png">
+</div>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/backstage.css">
+    <title>update</title>
+</head>
+<body>
+    <div class="back">
+        <div class="center">
+            <p style="font-size: 24px;margin-top: 20px;margin-left: 10px">修改管理员信息</p>
+            <form class="input_form" th:action="@{/admin/updateAdmin}" method="post" >
+                <input type="hidden" name="mgr_id" th:value="${admin.mgr_id}">
+                <span>工号</span><input style="width: 250px;margin-left: 20px" type="text" name="mgr_num" th:value="${admin.mgr_num}"><br>
+                <span>密码</span><input style="width: 250px;margin-left: 20px" type="text" name="mgr_pwd" th:value="${admin.mgr_pwd}"><br>
+                <span>姓名</span><input style="width: 250px;margin-left: 20px" type="text" name="mgr_name" th:value="${admin.mgr_name}"><br>
+                <span>性别</span>
+                    <select name="mgr_gender" style="width: 50px;height:30px;margin-top: 10px;margin-left: 15px">
+                        <option th:each="sex : ${SexList}" th:value="${sex.mgr_gender}" th:text="${sex.mgr_gender}"></option>
+                    </select><br>
+                <span>年龄</span><input style="width: 250px;margin-left: 20px" type="text" name="mgr_age" th:value="${admin.mgr_age}"><br>
+                <span>手机</span><input style="width: 250px;margin-left: 20px" type="text" name="mgr_tel" th:value="${admin.mgr_tel}"><br>
+                <input style="width:150px;margin-left:240px;padding-right:20px;background-color: rgb(64, 158, 255);color: white" type="submit" value="修改">
+            </form>
+        </div>
+        <img src="/img/background.png">
+    </div>
+</body>
+</html>

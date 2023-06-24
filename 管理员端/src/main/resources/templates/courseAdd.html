@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/backstage.css">
+    <title>update</title>
+</head>
+<body>
+<div class="center" style="height: 1500px">
+    <p style="font-size: 24px;margin-top: 20px;margin-left: 10px">分配或修改课程信息</p>
+    <form class="input_form" th:action="@{/course/addCourse}" method="post" >
+        <input type="hidden" name="course_id">
+        <span>名称</span><input style="width: 250px;margin-left: 20px" type="text" name="course_name"><br>
+        <span>说明</span><textarea style="height:100px;width: 250px;margin-top:10px;margin-left: 20px" name="course_desc"></textarea><br>
+        <span>学分</span><input style="width: 250px;margin-left: 20px" type="text" name="course_xf"><br>
+        <span>课时</span><input style="width: 250px;margin-left: 20px" type="text" name="course_time"><br>
+        <span>容量</span><input style="width: 250px;margin-left: 20px" type="text" name="course_cap"><br>
+        <span style="margin-left: 85px">已选学生数量</span><input style="width: 250px;margin-left: 20px" type="text" name="course_choosed"><br>
+        <span style="margin-left: 120px">是否选中</span>
+        <input  style="width: 25px; margin-left:20px;height: 15px" type="radio" name="choose_enable" value=1 checked>是
+        <input  style=" margin-left:10px;width: 25px;height: 15px" type="radio" name="choose_enable" value=0>否<br>
+        <span style="margin-left: 120px">授课教师</span>
+        <select name="teacher_id" style="width: 150px;height:40px;margin-top: 20px;margin-left: 15px">
+            <option th:each="teacher : ${teachers}" th:value="${teacher.teacher_id}" th:text="${teacher.teacher_name}"></option>
+        </select><br>
+        <span>学期</span>
+        <select name="step_id" style="width: 150px;height:40px;margin-top: 20px;margin-bottom:20px;margin-left: 15px">
+            <option th:each="step : ${steps}" th:value="${step.step_id}" th:text="${step.step_name}"></option>
+        </select><br>
+        <span style="margin-left: 120px">分配班级</span><br>
+        <div style="margin-left:200px;width:200px;margin-top: 20px" th:each="dto : ${courseDtoList}">
+            <label th:text="${dto.collegeName}"></label><br>
+            <input style="margin-left:20px;height: 15px;width: 50px;" type="checkbox" name="ids" th:each="clazz : ${dto.list}" th:value="${clazz.class_id}" th:text="${clazz.class_name}"><br>
+        </div>
+        <input style="width:150px;margin-left:240px;padding-right:20px;background-color: rgb(64, 158, 255);color: white" type="submit" value="添加">
+    </form>
+</div>
+<div class="back">
+    <img src="/img/background.png">
+</div>
+</body>
+</html>

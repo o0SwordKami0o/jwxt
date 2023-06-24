@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/icomoon/style.css">
+    <link rel="stylesheet" href="/css/backstage.css">
+    <script language="JavaScript">
+        function page(pageNo){
+            window.location.href="/admin/page?pageNo="+pageNo+'&keyword='+document.getElementsByClassName("search").item(0).value;
+        }
+
+        function del(id){
+            if(confirm('是否确认删除？')){
+                window.location.href='/admin/delete?id='+id;
+            }
+        }
+
+        function update(id){
+            window.location.href='/admin/update?id='+id;
+        }
+
+        function resect() {
+            window.location.href='/admin/page';
+        }
+    </script>
+    <title>admin</title>
+</head>
+<body>
+<div class="left">
+    <div class="left_top">
+        <p>教务管理系统</p>
+    </div>
+    <ul>
+        <li><i class="icon-office"></i>&nbsp;&nbsp;&nbsp;<a href="/back">首页</a></li>
+        <li style="color: rgb(64, 158, 255)"><i class="icon-user"></i>&nbsp;&nbsp;&nbsp;<a style="color: rgb(64, 158, 255)" href="/admin/index">用户管理</a></li>
+        <li><i class="icon-file-zip"></i>&nbsp;&nbsp;&nbsp;<a href="/course/index">课程管理</a></li>
+        <li><i class="icon-cart"></i>&nbsp;&nbsp;&nbsp;<a href="/teacher/index">教师管理</a></li>
+        <li><i class="icon-gift"></i>&nbsp;&nbsp;&nbsp;<a href="/student/index">学生管理</a></li>
+    </ul>
+</div>
+<div class="right">
+    <div class="right-top">
+        <p class="p_left">管理员管理</p>
+        <div class="p_right">至高无上的管理员：admin </div>
+        <div class="div_img"><img src="/img/tx.gif"></div>
+        <!--"../static/imgs/tx.gif" -->
+    </div>
+    <div class="right_body">
+        <div class="div_header">
+            <form th:action="@{/admin/page}" method="get">
+                管理员名：<input id="keyword" type="text"  class="search" name="keyword" placeholder="&nbsp;&nbsp;&nbsp;请输入管理员名" th:value="${keyword}"/>
+                <input type="submit" value="&nbsp;&nbsp;&nbsp;&nbsp;查询" class="searchBtn"/>
+                <i class="icon-search"></i>
+            </form>
+            <button class="resect" th:onclick="|resect()|"><i class="icon-redo"></i> 重置</button>
+            <a class="add_btn" href="/admin/add">＋添加</a>
+        </div>
+        <div class="div_table">
+            <table>
+                <tr>
+                    <th>工号</th>
+                    <th>姓名</th>
+                    <th>性别</th>
+                    <th>年龄</th>
+                    <th>手机</th>
+                    <th>修改</th>
+                    <th>删除</th>
+                </tr>
+                <tr th:if="${#lists.isEmpty(AdminList)}">
+                    <td colspan="5">暂无管理员</td>
+                </tr>
+                <tr th:unless="${#lists.isEmpty(AdminList)}" th:each="admin : ${AdminList}">
+                    <td th:text="${admin.mgr_num}"></td>
+                    <td th:text="${admin.mgr_name}"></td>
+                    <td th:text="${admin.mgr_gender}"></td>
+                    <td th:text="${admin.mgr_age}"></td>
+                    <td th:text="${admin.mgr_tel}"></td>
+                    <td><button class="del" th:onclick="|del(${admin.mgr_id})|">删除</button></td>
+                    <td><button class="update" th:onclick="|update(${admin.mgr_id})|">修改</button></td>
+                </tr>
+            </table>
+        </div>
+        <div class="div_bottom">
+            <input type="button" value="首  页" class="btn" th:onclick="|page(1)|" th:disabled="${pageNo==1}"/>
+            <input type="button" value="上一页" class="btn" th:onclick="|page(${pageNo-1})|" th:disabled="${pageNo==1}"/>
+            <input type="button" value="下一页" class="btn" th:onclick="|page(${pageNo+1})|" th:disabled="${pageNo==pageCount}"/>
+            <input type="button" value="尾  页" class="btn" th:onclick="|page(${pageCount})|" th:disabled="${pageNo==pageCount}"/>
+        </div>
+    </div>
+</div>
+</body>
+</html>
